@@ -20,7 +20,7 @@ const TextField = (props) => {
 
 TextField.propTypes = {
   value: PropTypes.string,
-  disabled: PropTypes.string,
+  disabled: PropTypes.bool,
   error: PropTypes.string,
 };
 TextField.defaultProps = {
