@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { PUBLIC_IMAGE_FOLDER, DEFAULT_BANNER_IMAGE, total } from '../../config/constant';
+// eslint-disable-next-line no-unused-vars
+import { PUBLIC_IMAGE_FOLDER, banners, DEFAULT_BANNER_IMAGE } from '../../config/constant';
 import Img from './style';
 import { getRandomNumber, getNextRoundRobin } from '../../libs/utils/math';
 
@@ -14,6 +15,7 @@ class Slider extends Component {
   }
 
   componentDidMount = () => {
+    const total = banners.length;
     const { random, duration } = this.props;
     let { current } = this.state;
     this.id = setInterval(() => {
