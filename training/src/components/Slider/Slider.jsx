@@ -56,7 +56,7 @@ class Slider extends Component {
     );
   }
 }
-export default Slider;
+
 Slider.propTypes = {
   altText: PropTypes.string,
   banner: PropTypes.arrayOf(PropTypes.string),
@@ -73,3 +73,5 @@ Slider.defaultProps = {
   height: 200,
   random: false,
 };
+
+export default Slider;
