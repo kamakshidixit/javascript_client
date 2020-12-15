@@ -15,9 +15,8 @@ const Math = (props) => {
     break;
   case '*': result = first * second;
     break;
-  default: break;
-  }
-  if (children) {
+  default: return (`${operator} of ${first} and ${second} is an Invalid Operator`);
+  } if (children) {
     return children(first, second, result);
   }
   return (
@@ -48,5 +47,4 @@ Math.propTypes = {
 Math.defaultProps = {
   children: undefined,
 };
-
-export default Text;
+export default Math;
