@@ -6,12 +6,19 @@ import {
 } from '@material-ui/core';
 import { Email, VisibilityOff, LockOutlined } from '@material-ui/icons';
 import * as yup from 'yup';
+// eslint-disable-next-line no-unused-vars
+import Footer from '../../Layouts/components/Footer/Footer';
 
 const LoginStyle = (theme) => ({
   main: {
     width: 350,
     marginTop: theme.spacing(10),
     marginLeft: theme.spacing(62),
+    [theme.breakpoints.up(400 + theme.spacing(3) * 2)]: {
+      width: 400,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
   },
   icon: {
     background: 'red',
