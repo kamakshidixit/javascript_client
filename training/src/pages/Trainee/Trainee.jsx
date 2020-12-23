@@ -1,26 +1,21 @@
-import { Button } from '@material-ui/core';
+/* eslint-disable no-unused-vars */
 import React from 'react';
-import { AddDialog } from './components/AddDialog';
-import { NavBar } from '../../Layouts/components/NavBar';
+// eslint-disable-next-line no-unused-vars
+import PropTypes from 'prop-types';
+import { Switch, Route } from 'react-router-dom';
+import TraineeList from './TraineeList';
+import TraineeDetail from './TraineeDetail';
 
-class Trainee extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { isOpen: false };
-  }
-
-  render() {
-    const { isOpen } = this.state;
-    return (
-      <>
-        <NavBar />
-        &nbsp;&nbsp;&nbsp;
-        <div>
-          <Button variant="outlined" color="primary" href="#outlined-buttons" onClick={() => this.setState({ isOpen: true })}>Add Trainee</Button>
-        </div>
-        <AddDialog open={isOpen} />
-      </>
-    );
-  }
+function Trainee(props) {
+  const { match: { path } } = props;
+  return (
+    <Switch>
+      <Route exact path={path} component={TraineeList} />
+      <Route exact path={`${path}/:traineeId`} component={TraineeDetail} />
+    </Switch>
+  );
 }
+Trainee.propTypes = {
+  match: PropTypes.objectOf(PropTypes.object).isRequired,
+};
 export default Trainee;

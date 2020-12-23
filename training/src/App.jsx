@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-// eslint-disable-next-line no-unused-vars
+import {
+  BrowserRouter as Router, Redirect, Route, Switch,
+} from 'react-router-dom';
 import { AuthRoute, PrivateRoute } from './routes/index';
 import {
   Login, InputDemo, ChildrenDemo, Trainee, TextFieldDemo, NoMatch,
@@ -13,13 +14,14 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact>
-            <AuthRoute component={Trainee} />
+            <Redirect to="/Trainee" />
           </Route>
-          <AuthRoute path="/login" component={Login} />
-          <PrivateRoute path="/text-field" component={TextFieldDemo} />
-          <PrivateRoute path="/childrenDemo" component={ChildrenDemo} />
-          <PrivateRoute path="/inputDemo" component={InputDemo} />
-          <PrivateRoute component={NoMatch} />
+          <PrivateRoute path="/login" component={Login} />
+          <AuthRoute path="/text-field" component={TextFieldDemo} />
+          <AuthRoute path="/childrenDemo" component={ChildrenDemo} />
+          <AuthRoute path="/inputDemo" component={InputDemo} />
+          <AuthRoute path="/trainee" component={Trainee} />
+          <AuthRoute component={NoMatch} />
         </Switch>
       </Router>
     </div>
