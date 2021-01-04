@@ -1,9 +1,14 @@
 /* eslint-disable linebreak-style */
 import styled, { css } from 'styled-components';
 
-const Div = styled.div`2%;`;
+const Div = styled.div`
+margin: 2%;
+border: 1px solid black;
+`;
 
-const Error = styled.p`color: red;`;
+const Error = styled.p`
+color: red;
+`;
 
 // eslint-disable-next-line no-unused-vars
 const Text = styled.div`
@@ -16,14 +21,14 @@ color: solid darkgray;
 const Input = styled.input`
 width: 94%;
 padding: 10px 15px;
-border: 1px solid orange;
+border: 1px solid gray;
 border-radius: 5px;
 color: solid darkgray;
 
 ${(props) => props.error
 && css`
 border: 1px solid red;
-color: red;
+color: black;
 `};
 }
 
@@ -36,7 +41,7 @@ ${(props) => props.onChange
 ${(props) => (props.value && !props.disabled && !props.error && !props.onChange)
 && css`
 border: 1px solid orange;
-color: black;
+color: red;
 `};
 }`;
 

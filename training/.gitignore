@@ -7,6 +7,8 @@
 .eslintcache
 package-lock.json
 .env
+/.eslintrc
+.eslintrc.json
 
 # testing
 /coverage
