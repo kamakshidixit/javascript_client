@@ -6,7 +6,7 @@ margin: 2%;
 border: 1px solid black;
 `;
 
-const Error = styled.p`color
+const Error = styled.p`
 color: red;
 `;
 
@@ -28,7 +28,7 @@ color: solid darkgray;
 ${(props) => props.error
 && css`
 border: 1px solid red;
-color: red;
+color: black;
 `};
 }
 
@@ -41,7 +41,7 @@ ${(props) => props.onChange
 ${(props) => (props.value && !props.disabled && !props.error && !props.onChange)
 && css`
 border: 1px solid orange;
-color: black;
+color: red;
 `};
 }`;
 
