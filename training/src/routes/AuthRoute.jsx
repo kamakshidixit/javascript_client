@@ -2,7 +2,6 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
-// eslint-disable-next-line import/named
 import { AuthLayout } from '../Layouts';
 
 const AuthRoute = ({ component: Component, ...rest }) => (

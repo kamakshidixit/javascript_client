@@ -1,9 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavBar } from '../components';
 
 const AuthLayout = ({ children, ...rest }) => (
-  <div>{ children }</div>
+  <div>
+    <NavBar />
+    <br />
+    <div>{children}</div>
+  </div>
 );
 
 AuthLayout.propTypes = {

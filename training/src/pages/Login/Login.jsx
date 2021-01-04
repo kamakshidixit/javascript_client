@@ -7,8 +7,6 @@ import {
 } from '@material-ui/core';
 import { Email, VisibilityOff, LockOutlined } from '@material-ui/icons';
 import * as yup from 'yup';
-// eslint-disable-next-line no-unused-vars
-import { Footer } from '../../Layouts/components/Footer/Footer';
 
 const LoginStyle = (theme) => ({
   main: {
