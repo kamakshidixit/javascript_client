@@ -1,10 +1,13 @@
+/* eslint-disable import/named */
 import React from 'react';
 import { ThemeProvider } from '@material-ui/core';
-import Math from '../../components/Math/Math';
+import { Math } from '../../components/Math';
 import Theme from '../../theme';
+// eslint-disable-next-line no-unused-vars
+import { NavBar } from '../../Layouts/components/NavBar';
 
-export default class CalculatorDemo extends React.Component {
-  Result() {
+class ChildrenDemo extends React.Component {
+  getResult() {
     let { result } = this.state;
     result = '';
     this.setState({ result });
@@ -13,6 +16,8 @@ export default class CalculatorDemo extends React.Component {
   render() {
     return (
       <>
+        <NavBar />
+        &nbsp;&nbsp;&nbsp;&nbsp;
         <ThemeProvider theme={Theme}>
           <Math first={7} second={4} operator="+" />
           <Math first={7} second={3} operator="-" />
@@ -65,3 +70,5 @@ export default class CalculatorDemo extends React.Component {
     );
   }
 }
+
+export default ChildrenDemo;

@@ -3,10 +3,13 @@ import { TextField } from '../../components';
 import { Div } from '../../components/TextField/style';
 import { Slider } from '../../components/Slider';
 import { banners, DEFAULT_BANNER_IMAGE } from '../../config/constant';
+import { NavBar } from '../../Layouts/components/NavBar';
 
 // eslint-disable-next-line react/prefer-stateless-function
 const TextFieldDemo = () => (
   <Div>
+    <NavBar />
+    &nbsp;&nbsp;&nbsp;
     <div>
       <Slider altText="No Image" duration="2000" height="200" random banner={banners} defaultbanner={DEFAULT_BANNER_IMAGE} />
     </div>
