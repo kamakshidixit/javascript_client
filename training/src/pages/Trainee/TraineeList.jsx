@@ -1,4 +1,3 @@
-/* eslint-disable import/named */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable no-console */
 import React from 'react';
@@ -7,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { AddDialog, RemoveDialog, EditDialog } from './components/index';
+import { AddDialog, DeleteDialog, EditDialog } from './components/index';
 import trainees from './data/trainee';
 import { TableComponent } from '../../components';
 import { getDateFormatted } from '../../libs/utils/getDateFormatted';
@@ -29,7 +28,7 @@ class TraineeList extends React.Component {
       EditOpen: false,
       DeleteOpen: false,
       selected: '',
-      orderBy: '',
+      orderBy: 'asc',
       order: '',
       page: 0,
       rowsPerPage: 10,
@@ -114,7 +113,7 @@ class TraineeList extends React.Component {
             onSubmit={this.handleEditButton}
             data={editData}
           />
-          <RemoveDialog
+          <DeleteDialog
             data={deleteData}
             onClose={this.handleDeleteButton}
             onSubmit={this.handleDeleteButton}

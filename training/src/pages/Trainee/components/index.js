@@ -1,3 +1,4 @@
 export { AddDialog } from './AddDialog';
 export { EditDialog } from './EditDialog';
-export { RemoveDialog } from './RemoveDialog';
+// eslint-disable-next-line import/named
+export { DeleteDialog } from './DeleteDialog';

@@ -15,7 +15,7 @@ const useStyles = () => ({
   },
 });
 
-class RemoveDialog extends Component {
+class DeleteDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,11 +65,11 @@ class RemoveDialog extends Component {
   }
 }
 
-RemoveDialog.propTypes = {
+DeleteDialog.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   data: PropTypes.objectOf(PropTypes.string).isRequired,
 };
-export default withStyles(useStyles)(RemoveDialog);
+export default withStyles(useStyles)(DeleteDialog);
