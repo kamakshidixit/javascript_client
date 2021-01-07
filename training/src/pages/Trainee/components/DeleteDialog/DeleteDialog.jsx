@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React, { Component } from 'react';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,10 +8,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import { SnackBarContext } from '../../../../contexts/index';
 
 const useStyles = () => ({
   buttonColor: {
-    backgroundColor: 'red',
+    backgroundColor: 'blue',
     color: 'white',
   },
 });
@@ -29,6 +32,26 @@ class DeleteDialog extends Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  handleSnackBarMessage = (data, openSnackBar) => {
+    const date = '2019-02-14T18:15:11.778Z';
+    const isAfter = (moment(data.createdAt).isAfter(date));
+    if (isAfter) {
+      this.setState({
+        message: 'Trainee Deleted Successfully ',
+      }, () => {
+        const { message } = this.state;
+        openSnackBar(message, 'success');
+      });
+    } else {
+      this.setState({
+        message: 'Error While Deleting Trainee',
+      }, () => {
+        const { message } = this.state;
+        openSnackBar(message, 'error');
+      });
+    }
+  }
 
   render() {
     const {
@@ -49,15 +72,20 @@ class DeleteDialog extends Component {
             <Button onClick={onClose} color="primary">
               Cancel
             </Button>
-            <Button
-              className={classes.buttonColor}
-              variant="contained"
-              onClick={() => {
-                onSubmit({ data });
-              }}
-            >
-              Delete
-            </Button>
+            <SnackBarContext.Consumer>
+              {({ openSnackBar }) => (
+                <Button
+                  className={classes.buttonColor}
+                  variant="contained"
+                  onClick={() => {
+                    onSubmit({ data });
+                    this.handleSnackBarMessage(data, openSnackBar);
+                  }}
+                >
+                  Delete
+                </Button>
+              )}
+            </SnackBarContext.Consumer>
           </DialogActions>
         </DialogContentText>
       </Dialog>
