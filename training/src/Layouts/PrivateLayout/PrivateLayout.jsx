@@ -1,13 +1,14 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Footer } from '../components/index';
+import { NavBar } from '../components/index';
 
 const PrivateLayout = ({ children, ...rest }) => (
   <div>
-    <div className="main">{children}</div>
-  &nbsp;
-    <Footer />
+    <Navbar />
+    <br />
+    <div>{ children }</div>
   </div>
 );
 

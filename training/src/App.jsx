@@ -18,12 +18,12 @@ function App() {
             <Route path="/" exact>
               <Redirect to="/Trainee" />
             </Route>
-            <PrivateRoute path="/login" component={Login} />
-            <AuthRoute path="/text-field" component={TextFieldDemo} />
-            <AuthRoute path="/childrenDemo" component={ChildrenDemo} />
-            <AuthRoute path="/inputDemo" component={InputDemo} />
-            <AuthRoute path="/trainee" component={Trainee} />
-            <AuthRoute component={NoMatch} />
+            <AuthRoute path="/login" component={Login} />
+            <PrivateRoute path="/text-field" component={TextFieldDemo} />
+            <PrivateRoute path="/childrenDemo" component={ChildrenDemo} />
+            <PrivateRoute path="/inputDemo" component={InputDemo} />
+            <PrivateRoute path="/trainee" component={Trainee} />
+            <PrivateRoute component={NoMatch} />
           </Switch>
         </SnackBarProvider>
       </Router>
