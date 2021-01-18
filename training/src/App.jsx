@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disabl */
 import React from 'react';
 import {
   BrowserRouter as Router, Redirect, Route, Switch,
