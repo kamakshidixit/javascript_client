@@ -1,4 +1,4 @@
-/* eslint-disabl */
+/* eslint-disable */
 import React from 'react';
 import {
   BrowserRouter as Router, Redirect, Route, Switch,
@@ -6,7 +6,7 @@ import {
 import { AuthRoute, PrivateRoute } from './routes/index';
 import {
   Login, InputDemo, ChildrenDemo, Trainee, TextFieldDemo, NoMatch,
-} from './pages';
+} from './pages/index';
 import { SnackBarProvider } from './contexts/SnackBarProvider';
 
 function App() {

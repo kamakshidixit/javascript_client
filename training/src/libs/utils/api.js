@@ -14,7 +14,6 @@ const callApi = async (data, method, url) => {
     const token = localStorage.get('token');
     // eslint-disable-next-line no-console
     console.log('Token:::::', token);
-    return response;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('Inside catch', error);

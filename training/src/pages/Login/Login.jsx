@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
-/* eslint-disable import/named */
+/* eslint-disable */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -56,14 +55,6 @@ class Login extends React.Component {
     };
   }
 
-  renderRedirect = () => {
-    const { redirect } = this.state;
-    if (redirect) {
-      return <Redirect to="/trainee" />;
-    }
-    return null;
-  }
-
   handleChange = (key) => ({ target: { value } }) => {
     this.setState({ [key]: value });
   };
@@ -98,6 +89,13 @@ class Login extends React.Component {
         [field]: true,
       },
     });
+  }
+
+  handleRedirect = () => {
+    const { redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/trainee" />;
+    }
   }
 
   onClickHandler = async (data, openSnackBar) => {
@@ -198,7 +196,7 @@ class Login extends React.Component {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        disabled={loading || this.hasErrors()}
+                        disabled={this.hasErrors()}
                         onClick={() => {
                           this.onClickHandler({ email, password }, openSnackBar);
                         }}
@@ -208,7 +206,7 @@ class Login extends React.Component {
                         )}
                         {loading && <span>Signing in</span>}
                         {!loading && <span>Sign in</span>}
-                        {this.renderRedirect()}
+                        {this.handleRedirect()}
                       </Button>
                     )}
                   </SnackBarContext.Consumer>

@@ -2,7 +2,7 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
-import { AuthLayout } from '../Layouts';
+import { AuthLayout } from '../Layouts/AuthLayout';
 
 const AuthRoute = ({ component: Component, ...rest }) => (
   <Route
