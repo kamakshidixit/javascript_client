@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as yup from 'yup';
@@ -11,6 +12,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import { withStyles } from '@material-ui/core/styles';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogContent from '@material-ui/core/DialogContent';
+import { SnackBarContext } from '../../../../contexts/index';
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required field'),
@@ -167,16 +169,21 @@ class EditDialog extends Component {
           <Button onClick={onClose} color="primary">
             Cancel
           </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={() => {
-              onSubmit({ data });
-            }}
-            disabled={hasError}
-          >
-            Submit
-          </Button>
+          <SnackBarContext.Consumer>
+            {({ openSnackBar }) => (
+              <Button
+                onClick={() => {
+                  onSubmit({ data });
+                  openSnackBar('Trainee Details Updated successfully! ', 'success');
+                }}
+                disabled={hasError}
+                color="primary"
+                variant="contained"
+              >
+                Submit
+              </Button>
+            )}
+          </SnackBarContext.Consumer>
         </DialogActions>
       </Dialog>
     );
