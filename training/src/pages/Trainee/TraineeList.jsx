@@ -48,19 +48,29 @@ class TraineeList extends React.Component {
   handleClose = () => {
     const { open } = this.state;
     this.setState({ open: false });
+    this.handleUpdateList();
     return open;
   };
 
   handleEditButton = (data) => {
-    this.setState({ EditOpen: false }, () => { console.log('Edited Item ', data.data); });
+    this.setState({ EditOpen: false }, () => { console.log('Edited Item ', data.data);
+    this.handleUpdateList();
+  });
   }
 
   handleDeleteButton = (data) => {
-    this.setState({ DeleteOpen: false }, () => { console.log('Deleted Item ', data.data); });
+    this.setState({ DeleteOpen: false }, () => { console.log('Deleted Item ', data.data);
+    this.handleUpdateList();
+    const { page } = this.state;
+    if ( page > 0 ){
+      this.setState({ page: page - 1 })
+    }
+  });
   };
 
   handleSelect = (event, data) => {
-    this.setState({ selected: event.target.value }, () => console.log('Data', data));
+    this.setState({ selected: event.target.value }, () =>
+    console.log('Data', data));
   };
 
   handleSort = (field) => () => {
@@ -102,26 +112,33 @@ class TraineeList extends React.Component {
     });
   };
 
-  componentDidMount = () => {
+  handleUpdateList = () => {
     const { limit, skip, dataObj } = this.state;
     this.setState({ loading: true });
     const value = this.context;
     console.log('TraineeList value', value);
     callApi({}, 'get', `trainee?skip=${skip}&limit=${limit}`).then((response) => {
-      console.log('List Response',response);
       if (response.data === undefined) {
         this.setState({
           loading: false,
           message: 'This is an error while displaying Trainee',
         }, () => {
-        });
+          });
       } else {
-        const records = response.data[0];
-        this.setState({ dataObj: records, loading: false, Count: 100 });
+        const { records } = response.data;
+        this.setState({
+          dataObj: records,
+          loading: false,
+          Count: response.totalCount
+         });
         return response;
       }
-      console.log('dataObj Response : ', response);
+     // console.log('dataObj Response : ', records);
     });
+  }
+
+  componentDidMount = () => {
+    this.handleUpdateList();
   }
 
   render() {
@@ -129,6 +146,7 @@ class TraineeList extends React.Component {
       open, order, orderBy, EditOpen,
       page, rowsPerPage, editData, DeleteOpen, deleteData, loading, dataObj, Count,
     } = this.state;
+    console.log('dtObj:', dataObj)
     const { match: { url }, classes } = this.props;
     return (
       <>
