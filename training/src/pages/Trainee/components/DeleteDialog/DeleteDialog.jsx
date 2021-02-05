@@ -1,15 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import Button from '@material-ui/core/Button';
+import {
+  Button, Dialog, DialogActions, DialogContentText, DialogTitle,
+  CircularProgress,
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { SnackBarContext } from '../../../../contexts/index';
+import callApi from '../../../../libs/utils/api';
 
 const useStyles = () => ({
   buttonColor: {
@@ -33,14 +32,20 @@ class DeleteDialog extends Component {
     this.setState({ open: false });
   };
 
-  handleSnackBarMessage = (data, openSnackBar) => {
-    const date = '2019-02-14T18:15:11.778Z';
-    const isAfter = (moment(data.createdAt).isAfter(date));
-    if (isAfter) {
+  onDeleteHandler = async (data, openSnackBar) => {
+    this.setState({
+      loading: true,
+    });
+    const { onSubmit } = this.props;
+    const { originalId } = data.data;
+    const response = await callApi({ }, 'delete', `trainee/${originalId}`);
+    this.setState({ loading: false });
+    if (response && response.status === 'success') {
       this.setState({
         message: 'Trainee Deleted Successfully ',
       }, () => {
         const { message } = this.state;
+        onSubmit(data);
         openSnackBar(message, 'success');
       });
     } else {
@@ -55,8 +60,9 @@ class DeleteDialog extends Component {
 
   render() {
     const {
-      classes, open, onClose, onSubmit, data,
+      classes, open, onClose, data,
     } = this.props;
+    const { loading } = this.state;
 
     return (
       <Dialog
@@ -78,11 +84,14 @@ class DeleteDialog extends Component {
                   className={classes.buttonColor}
                   variant="contained"
                   onClick={() => {
-                    onSubmit({ data });
-                    this.handleSnackBarMessage(data, openSnackBar);
+                    this.onDeleteHandler({ data }, openSnackBar);
                   }}
                 >
-                  Delete
+                  {loading && (
+                    <CircularProgress size={15} />
+                  )}
+                  {loading && <span>Deleting</span>}
+                  {!loading && <span>Delete</span>}
                 </Button>
               )}
             </SnackBarContext.Consumer>

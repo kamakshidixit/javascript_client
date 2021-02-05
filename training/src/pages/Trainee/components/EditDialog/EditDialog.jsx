@@ -2,17 +2,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as yup from 'yup';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
+import {
+  TextField, Button, Dialog, DialogTitle,
+  DialogActions, DialogContentText, DialogContent, CircularProgress,
+} from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 import EmailIcon from '@material-ui/icons/Email';
-import Button from '@material-ui/core/Button';
-import DialogActions from '@material-ui/core/DialogActions';
 import { withStyles } from '@material-ui/core/styles';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogContent from '@material-ui/core/DialogContent';
 import { SnackBarContext } from '../../../../contexts/index';
+import callApi from '../../../../libs/utils/api';
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required field'),
@@ -34,6 +32,7 @@ class EditDialog extends Component {
     this.state = {
       name: '',
       email: '',
+      loading: false,
       error: {
         name: '',
         email: '',
@@ -102,12 +101,47 @@ class EditDialog extends Component {
     return error[field];
   }
 
+  onEditHandler = async (Data, openSnackBar) => {
+    const { onSubmit } = this.props;
+    this.setState({
+      loading: true,
+    });
+    const response = await callApi(Data, 'put', 'trainee');
+    this.setState({ loading: false });
+    if (response && response.status === 'success') {
+      this.setState({
+        message: 'Trainee Updated Successfully',
+      }, () => {
+        const { message } = this.state;
+        onSubmit(Data);
+        openSnackBar(message, 'success');
+      });
+    } else {
+      this.setState({
+        message: 'Error while submitting',
+      }, () => {
+        const { message } = this.state;
+        openSnackBar(message, 'error');
+      });
+    }
+  }
+
+  formReset = () => {
+    this.setState({
+      name: '',
+      email: '',
+      touched: {},
+    });
+  }
+
   render() {
     const {
-      classes, open, onClose, onSubmit, data,
+      classes, open, onClose, data,
     } = this.props;
-    const { hasError, error } = this.state;
-    this.hasErrors();
+    const {
+      error, name, email, loading,
+    } = this.state;
+    const { originalId: id } = data;
     return (
       <Dialog
         open={open}
@@ -144,7 +178,7 @@ class EditDialog extends Component {
           />
           <TextField
             label="Email Address"
-            type="text"
+            type="email"
             autoComplete="off"
             fullWidth
             defaultValue={data.email}
@@ -173,14 +207,18 @@ class EditDialog extends Component {
             {({ openSnackBar }) => (
               <Button
                 onClick={() => {
-                  onSubmit({ data });
-                  openSnackBar('Trainee Details Updated successfully! ', 'success');
+                  this.onEditHandler({ name, email, id }, openSnackBar);
+                  this.formReset();
                 }}
-                disabled={hasError}
+                disabled={this.hasErrors()}
                 color="primary"
                 variant="contained"
               >
-                Submit
+                {loading && (
+                  <CircularProgress size={15} />
+                )}
+                {loading && <span>Submitting</span>}
+                {!loading && <span>Submit</span>}
               </Button>
             )}
           </SnackBarContext.Consumer>
