@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -104,12 +103,13 @@ class Login extends React.Component {
       loading: true,
       hasError: true,
     });
-    const res = await callApi(data, 'post', '/login');
-    console.log('ResponseErr', res);
+    const response = await callApi(data, 'post', '/login');
+    console.log('login data', data);
+    console.log('ResponseToken', response);
+    localStorage.set('token', response.data);
     this.setState({ loading: false });
-    const response = localStorage.get('token');
-    console.log('respone', response);
-    if (response && response.status === 200) {
+    const Token = localStorage.get('token');
+    if (Token !== 'undefined') {
       this.setState({
         redirect: true,
         hasError: false,
