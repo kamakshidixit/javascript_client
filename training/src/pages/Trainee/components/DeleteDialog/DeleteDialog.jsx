@@ -7,8 +7,7 @@ import {
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { SnackBarContext } from '../../../../contexts/index';
-import callApi from '../../../../libs/utils/api';
+import { SnackBarContext } from '../../../../contexts';
 
 const useStyles = () => ({
   buttonColor: {
@@ -37,10 +36,12 @@ class DeleteDialog extends Component {
       loading: true,
     });
     const { onSubmit } = this.props;
+    const { deleteTrainee, refetch } = this.props;
     const { originalId } = data.data;
-    const response = await callApi({ }, 'delete', `trainee/${originalId}`);
+    const response = await deleteTrainee({ variables: { originalId } });
     this.setState({ loading: false });
-    if (response && response.status === 'success') {
+    if (response && response.data.deleteTrainee.status === 'success') {
+      refetch();
       this.setState({
         message: 'Trainee Deleted Successfully ',
       }, () => {
@@ -60,7 +61,7 @@ class DeleteDialog extends Component {
 
   render() {
     const {
-      classes, open, onClose, data,
+      classes, open, onClose, data, onSubmit,
     } = this.props;
     const { loading } = this.state;
 
@@ -71,7 +72,7 @@ class DeleteDialog extends Component {
         fullWidth
         maxWidth="md"
       >
-        <DialogTitle id="form-dialog-title">Remove Trainee</DialogTitle>
+        <DialogTitle id="form-dialog-title">Delete Trainee</DialogTitle>
         <DialogContentText style={{ marginLeft: 25 }}>
           Do you really want to remove the trainee?
           <DialogActions>

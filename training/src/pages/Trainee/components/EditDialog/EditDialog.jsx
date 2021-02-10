@@ -9,8 +9,6 @@ import {
 import PersonIcon from '@material-ui/icons/Person';
 import EmailIcon from '@material-ui/icons/Email';
 import { withStyles } from '@material-ui/core/styles';
-import { SnackBarContext } from '../../../../contexts/index';
-import callApi from '../../../../libs/utils/api';
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required field'),
@@ -101,42 +99,17 @@ class EditDialog extends Component {
     return error[field];
   }
 
-  onEditHandler = async (Data, openSnackBar) => {
-    const { onSubmit } = this.props;
+  handleSet = () => {
+    const { data } = this.props;
     this.setState({
-      loading: true,
+      name: data.name,
+      email: data.email,
     });
-    const response = await callApi(Data, 'put', 'trainee');
-    this.setState({ loading: false });
-    if (response && response.status === 'success') {
-      this.setState({
-        message: 'Trainee Updated Successfully',
-      }, () => {
-        const { message } = this.state;
-        onSubmit(Data);
-        openSnackBar(message, 'success');
-      });
-    } else {
-      this.setState({
-        message: 'Error while submitting',
-      }, () => {
-        const { message } = this.state;
-        openSnackBar(message, 'error');
-      });
-    }
-  }
-
-  formReset = () => {
-    this.setState({
-      name: '',
-      email: '',
-      touched: {},
-    });
-  }
+  };
 
   render() {
     const {
-      classes, open, onClose, data,
+      classes, open, onClose, data, onSubmit,
     } = this.props;
     const {
       error, name, email, loading,
@@ -146,6 +119,7 @@ class EditDialog extends Component {
       <Dialog
         open={open}
         onClose={onClose}
+        onMouseEnter={this.handleSet}
         fullWidth
         maxWidth="md"
       >
@@ -160,7 +134,6 @@ class EditDialog extends Component {
             autoComplete="off"
             fullWidth
             defaultValue={data.name}
-            error={error.name}
             helperText={this.getError('name')}
             onBlur={() => this.isTouched('name')}
             onChange={this.handleChange('name')}
@@ -203,25 +176,20 @@ class EditDialog extends Component {
           <Button onClick={onClose} color="primary">
             Cancel
           </Button>
-          <SnackBarContext.Consumer>
-            {({ openSnackBar }) => (
-              <Button
-                onClick={() => {
-                  this.onEditHandler({ name, email, id }, openSnackBar);
-                  this.formReset();
-                }}
-                disabled={this.hasErrors()}
-                color="primary"
-                variant="contained"
-              >
-                {loading && (
-                  <CircularProgress size={15} />
-                )}
-                {loading && <span>Submitting</span>}
-                {!loading && <span>Submit</span>}
-              </Button>
+          <Button
+            onClick={() => {
+              onSubmit({ name, email, id });
+            }}
+            disabled={!!(name === data.name && email === data.email) || this.hasErrors()}
+            color="primary"
+            variant="contained"
+          >
+            {loading && (
+              <CircularProgress size={15} />
             )}
-          </SnackBarContext.Consumer>
+            {loading && <span>Submitting</span>}
+            {!loading && <span>Submit</span>}
+          </Button>
         </DialogActions>
       </Dialog>
     );

@@ -8,9 +8,7 @@ import { Email, VisibilityOff, Person } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import schema from './DialogSchema';
 import DialogField from './DialogField';
-import { SnackBarContext } from '../../../../contexts/index';
-import callApi from '../../../../libs/utils/api';
-import localStorage from 'local-storage';
+
 
 const stylePassword = () => ({
   passwordField: {
@@ -90,51 +88,21 @@ class AddDialog extends React.Component {
     return '';
   }
 
-  onClickHandler = async (data, openSnackBar) => {
-    this.setState({
-      loading: true,
-      hasError: true,
-    });
-    const { onClose } = this.props;
-    await callApi(data, 'post', 'trainee');
-    this.setState({ loading: false });
-    const Token = localStorage.get('token');
-    if (Token !== 'undefined') {
-      this.setState({
-        hasError: false,
-        message: 'This is a successfully added trainee message',
-      }, () => {
-        const { message } = this.state;
-        openSnackBar(message, 'success');
-      });
-    } else {
-      this.setState({
-        hasError: false,
-        message: 'error in submitting',
-      }, () => {
-        const { message } = this.state;
-        openSnackBar(message, 'error');
-      });
-    }
-    onclose();
-  }
-
   formReset = () => {
     this.setState({
       name: '',
       email: '',
       password: '',
-      confirmPassword: '',
       touched: {},
     });
   }
 
   render() {
     const {
-      open, onClose, classes,
+      open, onClose, classes,onSubmit
     } = this.props;
     const {
-      name, email, password, confirmPassword, loading,
+      name, email, password, loading,
     } = this.state;
     const textBox = [];
     Object.keys(constant).forEach((key) => {
@@ -212,6 +180,6 @@ export default withStyles(stylePassword)(AddDialog);
 AddDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
- // onSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
