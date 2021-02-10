@@ -6,7 +6,6 @@ const LOGIN_USER = gql`
   }
   `;
 
-console.log('login user mutation', LOGIN_USER);
 export {
   LOGIN_USER,
 };
