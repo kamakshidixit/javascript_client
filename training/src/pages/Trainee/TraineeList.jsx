@@ -206,7 +206,7 @@ class TraineeList extends React.Component {
     );
   }
 }
-TraineeList.contextType = MyContext;
+TraineeList.contextType = SnackBarContext;
 TraineeList.propTypes = {
   data: PropTypes.objectOf(PropTypes.string).isRequired,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
