@@ -7,6 +7,8 @@ import { AuthRoute, PrivateRoute } from './routes/index';
 import {
   Login, InputDemo, ChildrenDemo, Trainee, TextFieldDemo, NoMatch,
 } from './pages/index';
+import { ApolloProvider } from '@apollo/react-components';
+import apolloClient from './libs/apollo-client';
 import { SnackBarProvider } from './contexts/SnackBarProvider';
 
 function App() {
@@ -14,6 +16,7 @@ function App() {
     <div>
       <Router>
         <SnackBarProvider>
+        <ApolloProvider client={apolloClient}>
           <Switch>
             <Route path="/" exact>
               <Redirect to="/trainee" />
@@ -25,6 +28,7 @@ function App() {
             <PrivateRoute path="/trainee" component={Trainee} />
             <PrivateRoute component={NoMatch} />
           </Switch>
+          </ApolloProvider>
         </SnackBarProvider>
       </Router>
     </div>
