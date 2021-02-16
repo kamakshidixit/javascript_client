@@ -103,10 +103,10 @@ class Login extends React.Component {
       loading: true,
       hasError: true,
     });
-    const response = await callApi(data, 'post', '/login');
+    const response = await callApi(data, 'post', 'user/login');
     console.log('login data', data);
     console.log('ResponseToken', response);
-    localStorage.set('token', response.data);
+    localStorage.set('token', response.token);
     this.setState({ loading: false });
     const Token = localStorage.get('token');
     if (Token !== 'undefined') {
