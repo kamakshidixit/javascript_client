@@ -96,7 +96,8 @@ class AddDialog extends React.Component {
       hasError: true,
     });
     const { onClose } = this.props;
-    await callApi(data, 'post', 'trainee');
+    const res = await callApi(data, 'post', 'user');
+    console.log('add29--', res);
     this.setState({ loading: false });
     const Token = localStorage.get('token');
     if (Token !== 'undefined') {
@@ -116,7 +117,7 @@ class AddDialog extends React.Component {
         openSnackBar(message, 'error');
       });
     }
-    onclose();
+    onClose();
   }
 
   formReset = () => {

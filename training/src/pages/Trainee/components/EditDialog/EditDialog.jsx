@@ -106,7 +106,7 @@ class EditDialog extends Component {
     this.setState({
       loading: true,
     });
-    const response = await callApi(Data, 'put', 'trainee');
+    const response = await callApi(Data, 'put', 'user');
     this.setState({ loading: false });
     if (response && response.status === 'success') {
       this.setState({

@@ -59,7 +59,7 @@ class TraineeList extends React.Component {
   }
 
   handleDeleteButton = (data) => {
-    this.setState({ DeleteOpen: false }, () => { console.log('Deleted Item ', data.data);
+    this.setState({ DeleteOpen: false }, () => { console.log('Deleted Item ', data);
     this.handleUpdateList();
     const { page } = this.state;
     if ( page > 0 ){
@@ -111,21 +111,22 @@ class TraineeList extends React.Component {
 
     });
   };
-
   handleUpdateList = () => {
     const { limit, skip, dataObj } = this.state;
     this.setState({ loading: true });
     const value = this.context;
     console.log('TraineeList value', value);
-    callApi({}, 'get', `trainee?skip=${skip}&limit=${limit}`).then((response) => {
+    callApi({}, 'get', `user?skip=${skip}&limit=${limit}`).then((response) => {
+      console.log('1213reses;;', response.data);
       if (response.data === undefined) {
+        console.log('inside iff');
         this.setState({
           loading: false,
           message: 'This is an error while displaying Trainee',
-        }, () => {
-          });
+        });
       } else {
-        const { records } = response.data;
+        const records  = response.data;
+        console.log('dataObj Response : ', records);
         this.setState({
           dataObj: records,
           loading: false,
@@ -133,7 +134,7 @@ class TraineeList extends React.Component {
          });
         return response;
       }
-     // console.log('dataObj Response : ', records);
+
     });
   }
 
@@ -146,7 +147,7 @@ class TraineeList extends React.Component {
       open, order, orderBy, EditOpen,
       page, rowsPerPage, editData, DeleteOpen, deleteData, loading, dataObj, Count,
     } = this.state;
-    console.log('dtObj:', dataObj)
+    console.log('dtObj:', dataObj);
     const { match: { url }, classes } = this.props;
     return (
       <>

@@ -16,7 +16,7 @@ function App() {
         <SnackBarProvider>
           <Switch>
             <Route path="/" exact>
-              <Redirect to="/trainee" />
+              <Redirect to="/login" />
             </Route>
             <AuthRoute path="/login" component={Login} />
             <PrivateRoute path="/text-field" component={TextFieldDemo} />
