@@ -106,14 +106,18 @@ class EditDialog extends Component {
     this.setState({
       loading: true,
     });
-    const response = await callApi(Data, 'put', 'user');
+    const { name, email } = this.state;
+    const { id } = Data;
+    const res = { name, email, id };
+    console.log('3333333333333333333', res);
+    const response = await callApi({ ...res }, 'put', 'user');
     this.setState({ loading: false });
-    if (response && response.status === 'success') {
+    if (response) {
       this.setState({
         message: 'Trainee Updated Successfully',
       }, () => {
         const { message } = this.state;
-        onSubmit(Data);
+        onSubmit(res);
         openSnackBar(message, 'success');
       });
     } else {
@@ -139,9 +143,10 @@ class EditDialog extends Component {
       classes, open, onClose, data,
     } = this.props;
     const {
-      error, name, email, loading,
+      error, loading,
     } = this.state;
-    const { originalId: id } = data;
+    const { originalId: id, name, email } = data;
+
     return (
       <Dialog
         open={open}

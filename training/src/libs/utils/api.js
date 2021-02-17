@@ -3,8 +3,9 @@ import localStorage from 'local-storage';
 
 // eslint-disable-next-line consistent-return
 const callApi = async (data, method, url) => {
+  console.log('apiiiiiiiiiiiii', data);
   try {
-    const baseUrl = `http://localhost:9000/api/${url}`;
+    const baseUrl = `http://localhost:7000/api/${url}`;
     const response = await axios({
       method,
       url: baseUrl,
