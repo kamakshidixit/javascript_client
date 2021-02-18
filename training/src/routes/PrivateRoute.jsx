@@ -4,26 +4,29 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { PrivateLayout } from '../Layouts';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={(matchProps) => {
-      if ((localStorage.getItem('token'))) {
+const PrivateRoute = function ({ component: Component, ...rest }) {
+  const token = localStorage.getItem('token');
+  return (
+    <Route
+      {...rest}
+      render={(matchProps) => {
+        if ((token !== 'undefined') && token) {
+          console.log('------------------------------------');
+          return (
+            <PrivateLayout>
+              <Component {...matchProps} />
+            </PrivateLayout>
+          );
+        }
         return (
-          <PrivateLayout>
-            <Component {...matchProps} />
-          </PrivateLayout>
+          <Route>
+            <Redirect to="/login" />
+          </Route>
         );
-      }
-      return (
-        <Route>
-          <Redirect to="/login" />
-        </Route>
-      );
-    }}
-  />
-);
-
+      }}
+    />
+  );
+};
 PrivateRoute.propTypes = {
   component: PropTypes.objectOf(PropTypes.string).isRequired,
 };

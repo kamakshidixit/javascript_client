@@ -1,6 +1,6 @@
 eslintrc
 node_modules
 .eslintcache
-package_lock.json
+package-lock.json
 build
 

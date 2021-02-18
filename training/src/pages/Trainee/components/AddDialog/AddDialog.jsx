@@ -37,6 +37,7 @@ class AddDialog extends React.Component {
       Email: '',
       Password: '',
       ConfirmPassword: '',
+      role: 'trainee',
       loading: false,
       touched: {
         name: false,
@@ -135,7 +136,7 @@ class AddDialog extends React.Component {
       open, onClose, classes,
     } = this.props;
     const {
-      name, email, password, confirmPassword, loading,
+      name, email, password, confirmPassword, loading, role
     } = this.state;
     const textBox = [];
     Object.keys(constant).forEach((key) => {
@@ -189,7 +190,7 @@ class AddDialog extends React.Component {
                     disabled={this.hasErrors()}
                     onClick={() => {
                       this.onClickHandler({
-                        name, email, password, confirmPassword,
+                        name, email, password, confirmPassword, role,
                       }, openSnackBar);
                       this.formReset();
                     }}

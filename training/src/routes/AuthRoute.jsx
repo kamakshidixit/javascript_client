@@ -8,7 +8,9 @@ const AuthRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(matchProps) => {
-      if (!(localStorage.getItem('token'))) {
+      const token = localStorage.getItem('token');
+      if (!((token !== 'undefined') && token)) {
+        console.log('--------------->', localStorage.getItem('token'));
         return (
           <AuthLayout>
             <Component {...matchProps} />
