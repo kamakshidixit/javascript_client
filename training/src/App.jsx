@@ -8,6 +8,8 @@ import {
   Login, InputDemo, ChildrenDemo, Trainee, TextFieldDemo, NoMatch,
 } from './pages/index';
 import { SnackBarProvider } from './contexts/SnackBarProvider';
+import { Homepage } from './pages/Homepage';
+import { home } from './components/Homepage';
 
 function App() {
   return (
@@ -15,6 +17,7 @@ function App() {
       <Router>
         <SnackBarProvider>
           <Switch>
+            {/* <Route path = "/home" component={home}/> */}
             <Route path="/" exact>
               <Redirect to="/login" />
             </Route>
@@ -23,6 +26,9 @@ function App() {
             <PrivateRoute path="/childrenDemo" component={ChildrenDemo} />
             <PrivateRoute path="/inputDemo" component={InputDemo} />
             <PrivateRoute path="/trainee" component={Trainee} />
+            <PrivateRoute path = "/home" component={Homepage} />
+            <Route path = "/homepage" component={home} />
+            <Route path = "/nofound" component={NoMatch} />
             <PrivateRoute component={NoMatch} />
           </Switch>
         </SnackBarProvider>

@@ -11,6 +11,9 @@ import localStorage from 'local-storage';
 import { Redirect } from 'react-router-dom';
 import callApi from '../../libs/utils/api';
 import { SnackBarContext } from '../../contexts';
+import jwt_decode from 'jwt-decode';
+import home from '../../components/Homepage';
+
 
 const LoginStyle = (theme) => ({
   main: {
@@ -44,6 +47,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      role: '',
       loading: false,
       redirect: false,
       hasError: true,
@@ -90,14 +94,10 @@ class Login extends React.Component {
     });
   }
 
-  handleRedirect = () => {
-    const { redirect } = this.state;
-    if (redirect) {
-      return <Redirect to="/trainee" />;
-    }
-  }
+
 
   onClickHandler = async (data, openSnackBar) => {
+    // const role = this.state;
     this.setState({
       loading: true,
       hasError: true,
@@ -109,12 +109,21 @@ class Login extends React.Component {
     console.log('ResponseToken', response);
     // Conditionally set token only when there is no error
     localStorage.set('token', response.token)
+
     this.setState({ loading: false });
 
     const Token = localStorage.get('token');
-    console.log('ttiii', Token);
+    // console.log('data', Token);
+    // var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDJlMzQ2ZWJjNDI5MjQ5NmJhN2ZjNDYiLCJuYW1lIjoiSGVhZCBUcmFpbmVyIiwicm9sZSI6ImhlYWQtdHJhaW5lciIsImVtYWlsIjoiaGVhZC50cmFpbmVlQHN1Y2Nlc3NpdmUudGVjaCIsInBhc3N3b3JkIjoiJDJiJDEwJHZLRko1VC9YSno5V2VQUEQxZjBzN09WR00ub2xDakdieGxPVm9vVS9McjEvWFhzZW5JMy55Iiwib3JpZ2luYWxJZCI6IjYwMmUzNDZlYmM0MjkyNDk2YmE3ZmM0NiIsImNyZWF0ZWRBdCI6IjIwMjEtMDItMThUMDk6MzM6MzQuOTI2WiIsIl9fdiI6MCwiaWF0IjoxNjEzNjc1MTcwLCJleHAiOjMyMjczNTEyNDB9.6L_JF0y7hzE5qZ4g1swJffO_4ZaGMDxzwSH72lkSE9w';
+    var decoded = jwt_decode(response.token);
+    const a = decoded.role;
+    this.setState({ role: a });
+    console.log('-----------------------------', decoded);
+    const { role } = decoded;
+    console.log('hhh--', role);
 
     if (Token !== 'undefined') {
+
       this.setState({
         redirect: true,
         hasError: false,
@@ -133,11 +142,23 @@ class Login extends React.Component {
     }
   }
 
+  handleRedirect = () => {
+    const { redirect, role } = this.state;
+    console.log('eeee---', role);
+    if (redirect && role ==='head-trainer' ) {
+        return <Redirect to="/trainee" />;
+      }
+      if (redirect && role !=='head-trainer' ) {
+        return <Redirect to="/homepage" />;
+      }
+    }
+
   render() {
-    const { classes } = this.props;
+    const { classes,role } = this.props;
     const {
       email, password, loading,
     } = this.state;
+    console.log('www--', role);
     this.hasErrors();
     return (
       <>

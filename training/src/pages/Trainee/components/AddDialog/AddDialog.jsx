@@ -187,7 +187,7 @@ class AddDialog extends React.Component {
                   <Button
                     color="primary"
                     variant="contained"
-                    disabled={this.hasErrors()}
+                    // disabled={this.hasErrors()}
                     onClick={() => {
                       this.onClickHandler({
                         name, email, password, confirmPassword, role,

@@ -28,6 +28,7 @@ export default function NavBar() {
             Trainee Portal
           </Typography>
           <Button component={Link} to="/" color="inherit">TRAINEE</Button>
+          <Button component={Link} to="/home" color="inherit">HOME</Button>
           <Button component={Link} to="/text-field" color="inherit">TEXTFIELD DEMO</Button>
           <Button component={Link} to="/inputDemo" color="inherit">INPUT DEMO</Button>
           <Button component={Link} to="/childrenDemo" color="inherit">CHILDREN DEMO</Button>

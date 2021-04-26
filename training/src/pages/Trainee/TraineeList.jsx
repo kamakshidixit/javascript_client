@@ -11,6 +11,7 @@ import { TableComponent } from '../../components';
 import { getDateFormatted } from '../../libs/utils/getDateFormatted';
 import callApi from '../../libs/utils/api';
 
+
 const useStyles = (theme) => ({
   root: {
     margin: theme.spacing(2),
@@ -148,6 +149,7 @@ class TraineeList extends React.Component {
       page, rowsPerPage, editData, DeleteOpen, deleteData, loading, dataObj, Count,
     } = this.state;
     console.log('dtObj:', dataObj);
+
     const { match: { url }, classes } = this.props;
     return (
       <>

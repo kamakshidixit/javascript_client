@@ -109,7 +109,7 @@ class EditDialog extends Component {
     const { name, email } = this.state;
     const { id } = Data;
     const res = { name, email, id };
-    console.log('3333333333333333333', res);
+    // console.log('3333333333333333333', res);
     const response = await callApi({ ...res }, 'put', 'user');
     this.setState({ loading: false });
     if (response) {

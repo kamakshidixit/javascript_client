@@ -6,3 +6,4 @@ export { Button } from './Button';
 export { Math } from './Math';
 export { TableComponent } from './Table';
 export { hoc } from './HOC';
+export { home } from './Homepage';
